@@ -1,4 +1,6 @@
 import { StoreOptions } from "vuex";
+import ACCESS_ENUM from "@/access/accessEnum";
+import { UserControllerService } from "../../generated";
 
 export default {
   namespaced: true,
@@ -6,25 +8,30 @@ export default {
   state: () => ({
     loginUser: {
       userName: "未登录",
-      role: "notLogin",
     },
   }),
 
   // getters
   getters: {},
-
+  // actions
+  actions: {
+    async getLoginUser({ commit, state }, payload) {
+      // 改为从远程获取登录信息
+      const res = await UserControllerService.getLoginUserUsingGet();
+      if (res.code === 0) {
+        commit("updateUser", res.data);
+      } else {
+        commit("updateUser", {
+          ...state.loginUser,
+          userRole: ACCESS_ENUM.NOT_LOGIN,
+        });
+      }
+    },
+  },
   // mutations
   mutations: {
     updateUser(state, payload) {
       state.loginUser = payload;
-    },
-  },
-
-  // actions
-  actions: {
-    // todo 改为从远程获取登录信息
-    getLoginUser({ commit, state }, payload) {
-      commit("updateUser", payload);
     },
   },
 } as StoreOptions<any>;
