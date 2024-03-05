@@ -18,9 +18,12 @@
         />
       </a-form-item>
       <a-form-item>
+        <a-link href="/user/register" class="link">立即注册</a-link>
+      </a-form-item>
+      <a-form-item>
         <a-button type="primary" html-type="submit" class="button"
-          >登录</a-button
-        >
+          >登录
+        </a-button>
       </a-form-item>
     </a-form>
   </div>
@@ -67,7 +70,8 @@ const handleSubmit = async () => {
 #userLoginView .title {
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 16px;
+  margin-top: 16px;
+  margin-bottom: 32px;
 }
 
 #userLoginView .form {
@@ -77,5 +81,9 @@ const handleSubmit = async () => {
 
 #userLoginView .button {
   width: 100%;
+}
+
+#userLoginView .link {
+  margin-left: auto;
 }
 </style>
