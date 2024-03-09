@@ -20,6 +20,25 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 
+const debounce = (callback: (...args: any[]) => void, delay: number) => {
+  let tid: any;
+  return function (...args: any[]) {
+    const ctx = self;
+    tid && clearTimeout(tid);
+    tid = setTimeout(() => {
+      callback.apply(ctx, args);
+    }, delay);
+  };
+};
+
+const _ = (window as any).ResizeObserver;
+(window as any).ResizeObserver = class ResizeObserver extends _ {
+  constructor(callback: (...args: any[]) => void) {
+    callback = debounce(callback, 20);
+    super(callback);
+  }
+};
+
 /**
  * 全局初始化函数，有全局单次调用的代码都可以卸载这里
  */
